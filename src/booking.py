@@ -1,6 +1,7 @@
 # data required = building , user, date and time slot - user requirement and slot filter
 from organisation import org
 import threading
+import datetime
     
 class bookingSlot:
     def __init__(self, id, userId, roomId, date, startTime, endTime):
@@ -10,17 +11,19 @@ class bookingSlot:
         self.date = date
         self.startTime = startTime
         self.endTime = endTime
+        self.dateOfBooking = datetime.date.today()
         self.active = True
 
 class bookingSystem:
-    def __init__(self, title):
+    def __init__(self, title, location):
         self.title = title
+        self.building = location
         self.organisation = []
         self.reservations = []    
         self.lockBooking = threading.Lock()    
 
     def add_org(self, name, contact):
-        self.organisation.append(org(len(self.organisation), name, contact))
+        self.organisation.append(org(self, len(self.organisation), name, contact))
 
     def get_org(self, email):
         for ORG in self.organisation:
@@ -39,3 +42,10 @@ class bookingSystem:
     def add_booking(self, id, userId, roomId, date, startTime, endTime):
         Slot = bookingSlot(id, userId, roomId, date, startTime, endTime)
         self.reservations.append(Slot)
+
+    def getDetail(self, bookingId):
+        info = self.reservations[bookingId - 1]
+        return info
+
+    def changeStatus(self, bookingId):
+        self.reservations[bookingId - 1].active = False

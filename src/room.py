@@ -26,6 +26,19 @@ class room:
                 print(f"System Notification ====> This Room is not available for booking.")
                 return False
 
+    def cancel(self, date, startTime, endTime, bookingId):
+        if self.calendar.get(date) != None:
+            for i in range(startTime, endTime):
+                if self.calendar[date][i] == bookingId:
+                    self.calendar[date][i] = 0
+                else:
+                    print(f"System Notification ====> Wrong Information for Booking Id {bookingId}")
+                    return False
+            return True
+        else:
+            print(f"No Booking Found for Booking Id {bookingId}.")
+            return False
+
     def is_available(self, date, startTime, endTime):
         if self.calendar.get(date) == None:
             return True
@@ -35,4 +48,11 @@ class room:
             if appointments[i]:
                 return False
         return True
+
+    def listRoom(self, date):
+        if self.calendar.get(date) == None:
+            availability = "All Day"
+        else:
+            availability = self.calendar[date]
+        return self, availability
 

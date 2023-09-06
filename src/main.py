@@ -4,9 +4,10 @@ from building import building
 # from organisation import org
 from booking import bookingSystem
 import datetime
+import time
 
 building = building(3)
-booking = bookingSystem("VARAHA CONFERENCE OFFICES")
+booking = bookingSystem("VARAHA CONFERENCE OFFICES", building)
 
 building.add_room(0, "S", 2)
 building.add_room(2, "D", 12)
@@ -44,17 +45,29 @@ for i in range(0, len(available_slot)):
     print(f"{i+1}. {available_slot[i].id}                 {available_slot[i].room_type}          {available_slot[i].occupancy}")
 print("Select Room by Choosing index:")
 num = int(input())
-user.request_booking(available_slot[i-1], date, s, e, booking)
-thread1 = threading.Thread(target = user3.request_booking, args = (available_slot[i-1], date, s, e, booking))
+user.request_booking(available_slot[i-1], date, s, e)
+thread1 = threading.Thread(target = user3.request_booking, args = (available_slot[i-1], date, s, e))
 s = 2
 e = 3
-thread2 = threading.Thread(target = user2.request_booking, args = (available_slot[i-1], date, s, e, booking))
+thread2 = threading.Thread(target = user2.request_booking, args = (available_slot[i-1], date, s, e))
 s = 6
 e = 7
-thread3 = threading.Thread(target = user.request_booking, args = (available_slot[i-1], date, s, e, booking))
+thread3 = threading.Thread(target = user.request_booking, args = (available_slot[i-1], date, s, e))
+thread4 = threading.Thread(target = user.request_booking, args = (available_slot[i-1], date, s, e))
+
 thread3.start()
 thread2.start()
 thread1.start()
+time.sleep(1)
+org.show_bookings(datetime.date(2023, 9, 8))
+user3.cancel_booking(2)
+user3.cancel_booking(2)
+user.cancel_booking(2)
+user.cancel_booking(2)
+thread4.start()
+thread4.join()
+org.show_bookings(datetime.date(2023, 9, 8))
+print(building.listRoom(datetime.date(2023, 9, 9)))
 while False:
     print("Enter Command:")
     text = input()

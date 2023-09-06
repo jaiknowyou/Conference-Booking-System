@@ -33,3 +33,9 @@ class building:
                 slots = slots + room
         return slots
 
+    def listRoom(self, date):
+        rooms = ()
+        for i in self.building:
+            rooms = rooms + i.listRoom(date)
+        return rooms
+

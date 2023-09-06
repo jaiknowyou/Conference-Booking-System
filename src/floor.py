@@ -25,3 +25,9 @@ class floor:
                 slots.append(hall)
                 hall.description()
         return slots
+
+    def listRoom(self, date):
+        rooms = ()
+        for i in self.room:
+            rooms = rooms + i.listRoom(date)
+        return rooms
