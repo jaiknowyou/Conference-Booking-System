@@ -47,8 +47,14 @@ class org:
         org.display_bookings(bookings)
         return bookings
 
+    def modifyPermissions(self, user):
+        if user.bookings == None:
+            user.bookings = []
+        else:
+            user.bookings = None
+
 class user:
-    def __init__(self, name, email, role, org, bookingPermission = False):
+    def __init__(self, name, email, role, org, bookingPermission):
         self.id = "O" + str(org.id) + "U" + str(len(org.user))
         self.name = name
         self.email = email
@@ -101,8 +107,16 @@ class user:
         else:
             print("User has no booking with this booking Id.")
 
-    def show_bookings(self, date):
-        return self.org.show_bookings(date, self.bookings)
+    def show_bookings(self, date, userId = None):
+        if userId:
+            numbers = re.findall(r'\d+', userId)
+            [o, u ]= [int(num) for num in numbers]
+            if len(self.org.user) > u and self.org.user[u].id == userId:
+                return self.org.show_bookings(date, self.org.user[u].bookings)
+            else:
+                print("User Not Found.")
+        else:
+            return self.org.show_bookings(date, self.bookings)
 
     def notify(self, mtype = 1):
         if mtype == 1:

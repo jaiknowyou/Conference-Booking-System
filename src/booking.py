@@ -24,6 +24,7 @@ class bookingSystem:
 
     def add_org(self, name, contact):
         self.organisation.append(org(self, len(self.organisation), name, contact))
+        return self.organisation[-1]
 
     def get_org(self, email):
         for ORG in self.organisation:
