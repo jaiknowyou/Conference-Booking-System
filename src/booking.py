@@ -1,52 +1,80 @@
-# data required = building , user, date and time slot - user requirement and slot filter
-from organisation import org
+from src.organisation import org
 import threading
 import datetime
-    
+
+# bookingSlot Class instances to save reservation related data
 class bookingSlot:
     def __init__(self, id, userId, roomId, date, startTime, endTime):
-        self.id = id
-        self.roomId = roomId
-        self.userId = userId
-        self.date = date
-        self.startTime = startTime
-        self.endTime = endTime
-        self.dateOfBooking = datetime.date.today()
-        self.active = True
+        try:
+            self.id = id
+            self.roomId = roomId
+            self.userId = userId
+            self.date = date
+            self.startTime = startTime
+            self.endTime = endTime
+            self.dateOfBooking = datetime.date.today()
+            self.active = True
+        except Exception as error:
+            print("An error occurred in bookingSlot():", error)
 
+# booingSystem links the building(Conference Rooms) and Org(Users) data to facilitate bookings
 class bookingSystem:
     def __init__(self, title, location):
-        self.title = title
-        self.building = location
-        self.organisation = []
-        self.reservations = []    
-        self.lockBooking = threading.Lock()    
+        try:
+            self.title = title
+            self.building = location
+            self.organisation = []
+            self.reservations = []    
+            self.lockBooking = threading.Lock()
+        except Exception as error:
+            print("An error occurred in bookingSystem():", error)    
 
     def add_org(self, name, contact):
-        self.organisation.append(org(self, len(self.organisation), name, contact))
-        return self.organisation[-1]
+        try:
+            self.organisation.append(org(self, len(self.organisation), name, contact))
+            return self.organisation[-1]
+        except Exception as error:
+            print("An error occurred in bookingSystem.add_org():", error)
 
     def get_org(self, email):
-        for ORG in self.organisation:
-            if ORG.contact == email:
-                return ORG
-        return None
+        try:
+            for ORG in self.organisation:
+                if ORG.contact == email:
+                    return ORG
+            return None
+        except Exception as error:
+            print("An error occurred in bookingSystem.get_org():", error)
 
     def renew_monthly_limit(self):
-        for ORG in self.organisation:
-            ORG.renew_monthly_limit(30)
+        try:
+            for ORG in self.organisation:
+                ORG.renew_monthly_limit(30)
+        except Exception as error:
+            print("An error occurred in bookingSystem.renew_monthly_limit():", error)
 
     def generateId(self):
-        return len(self.reservations)+1
+        try:
+            return len(self.reservations)+1
+        except Exception as error:
+            print("An error occurred in bookingSystem.geberateId():", error)
 
 
     def add_booking(self, id, userId, roomId, date, startTime, endTime):
-        Slot = bookingSlot(id, userId, roomId, date, startTime, endTime)
-        self.reservations.append(Slot)
+        try:
+            Slot = bookingSlot(id, userId, roomId, date, startTime, endTime)
+            self.reservations.append(Slot)
+        except Exception as error:
+            print("An error occurred in bookingSystem.add_booking():", error)
 
     def getDetail(self, bookingId):
-        info = self.reservations[bookingId - 1]
-        return info
+        try:
+            info = self.reservations[bookingId - 1]
+            return info
+        except Exception as error:
+            print("An error occurred in bookingSystem.getDetail():", error)
 
     def changeStatus(self, bookingId):
-        self.reservations[bookingId - 1].active = False
+        try:
+            self.reservations[bookingId - 1].active = False
+        except Exception as error:
+            print("An error occurred in bookingSystem.changeStatus():", error)

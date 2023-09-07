@@ -1,9 +1,8 @@
-import threading
 import datetime
 import time
-from building import building
-from booking import bookingSystem
-from testCases import testCase
+from src.building import building
+from src.booking import bookingSystem
+from src.testCases import testCase
 
 # initialising Conference Building with number of Floor as parameter
 building = building(3)
@@ -13,58 +12,80 @@ building.add_floor()
 # All operations and information would be available through this Object
 booking = bookingSystem("VARAHA CONFERENCE OFFICES", building)
 
+# To run test cases
 print("For running test cases: Type t")
 print("else type e for exit")
 text = input()
 while text == "t":
     t = testCase(booking)
-    while text:
-        text = input()
-        if text == "1":
+    while True:
+        i = 1
+        if i == 1:
             t.testCase1()
             text = input()
-        if text == "2":
+            i += 1
+        if i == 2:
             t.testCase2()
             text = input()
-        if text == "3":
+            i += 1
+        if i == 3:
             t.testCase3()
             text = input()
-        if text == "4":
+            i += 1
+        if i == 4:
             t.testCase4()
             text = input()
-        if text == "5":
+            i += 1
+        if i == 5:
             t.testCase5()
             text = input()
-        if text == "6":
+            i += 1
+        if i == 6:
             t.testCase6()
             text = input()
-        if text == "7":
+            i += 1
+        if i == 7:
             t.testCase7()
             text = input()
-        if text == "8":
+            i += 1
+        if i == 8:
             t.testCase8()
             text = input()
-        if text == "9":
+            i += 1
+        if i == 9:
             t.testCase9()
             text = input()
-        if text == "10":
+            i += 1
+        if i == 10:
             t.testCase10()
             text = input()
-        if text == "11":
+            i += 1
+        if i == 11:
             t.testCase11()
             text = input()
-        if text == "12":
+            i += 1
+        if i == 12:
             t.testCase12()
+            print("To run testCase13 now, type 13")
             text = input()
+        if text == "13":
+            t.testCase13()
+            text = input()
+            text = "e"
         if text == "e":
             break
     break
 
 
 # initialising Conference Rooms
-building.add_room(0, "S", 2)
-building.add_room(2, "D", 12)
-building.add_room(1, "E", 10)
+print("All test Cases Complete.")
+print("\n")
+
+time.sleep(1)
+
+building.add_room(0, "S", 9)
+building.add_room(4, "D", 6)
+building.add_room(1, "E", 8)
 building.description()
 
 # Monthly booking limit Renews at the first day of the month == 30
