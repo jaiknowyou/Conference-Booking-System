@@ -18,9 +18,11 @@ class org:
             print("An error occurred in org():", error)
 
     def renew_monthly_limit(self, limit):
+        # renewing booking limit at the start of the month
         self.limit = limit
     
     def add_user(self, name, email, role, bookingPermission):
+        # New user adding to org
         try:
             self.user.append(user(name, email, role, self, bookingPermission))
             print(f"Current User is {name} and Current organisation is {self.name}")
@@ -41,7 +43,7 @@ class org:
         except Exception as error:
             print("An error occurred in org.display_booking():", error)
 
-    def show_bookings(self, date, bookingIds = None):
+    def get_bookings(self, date, bookingIds = None):
         try:
             bookings = []
             if bookingIds == None:
@@ -57,9 +59,10 @@ class org:
             org.display_bookings(bookings)
             return bookings
         except Exception as error:
-            print("An error occurred in org.show_bookings():", error)
+            print("An error occurred in org.get_bookings():", error)
 
     def modifyPermissions(self, user):
+        # booking Permission Change
         if user.bookings == None:
             user.bookings = []
         else:
@@ -81,28 +84,37 @@ class user:
         
     def request_booking(self, room, date, startTime, endTime):
         try:
+            # Validating data and checks before booking
+            # checking time
             if startTime < 0 or startTime > 23 or endTime < 1 or endTime > 24 or endTime < startTime:
                 print("Invalid time range.")
                 return
+            # User booking Permissions Check
             if self.bookings == None:
                 print("User don't have booking Permissions.")
                 return
+            # checking date
             elif datetime.datetime(date.year, date.month, date.day, startTime) < datetime.datetime.today():
                 print("Invalid date. Reservation Date has already Passed.")
                 return
+            # Thread Lock to ensure data consistency at the time of booking
             with self.org.lock:
                 if self.org.limit == 0:
                     print("Booking Limit has Reached. We cannot fulfill any bookings this month.")
                 else:
                     if type(room) == str:
                         room = self.org.bookingSystem.building.searchRoom(room)
+                    # Thread Lock to ensure data consistency at the time of booking
                     self.org.bookingSystem.lockBooking.acquire()
                     bookingId = self.org.bookingSystem.generateId()
                     if room.book(startTime, endTime, date, bookingId):
+                        # reducing monthly limit of org after booking
                         self.org.limit -= 1
                         self.org.bookingSystem.add_booking(bookingId, self.id, room.id, date, startTime, endTime)
+                        # Add booking id in user bookings and notifying user
                         self.bookings.append(bookingId)
                         self.notify()
+                        # Add booking id in organisation bookings and notifying org
                         self.org.bookings.append(bookingId)
                         self.org.notify()
                     else:
@@ -115,11 +127,14 @@ class user:
         try:
             if bookingId in self.bookings:
                 info = self.org.bookingSystem.getDetail(bookingId)
+                # checking if this booking is active
                 if not info.active:
                     print("Booking has been already cancelled.")
                     return
+                # checking reservation dates and times
                 elif info.date == datetime.date.today():
                     timediff = datetime.datetime(info.date.year, info.date.month, info.date.day, info.startTime) - datetime.datetime.now()
+                    # 15 minute check before booking cancellation
                     if divmod(timediff.total_seconds(), 60)[0] < 15.0:
                         print("Booking cannot be cancelled within 15 minutes of the reservation time.")
                         return
@@ -128,7 +143,9 @@ class user:
                     return
                 room = self.org.bookingSystem.building.searchRoom(info.roomId)
                 if room.cancel(info.date, info.startTime, info.endTime, bookingId):
+                    # changing booking status to cancelled
                     self.org.bookingSystem.changeStatus(bookingId)
+                    # updating booking monthly limit of org and notifying user
                     self.org.limit += 1
                     self.notify(3)
             else:
@@ -136,23 +153,24 @@ class user:
         except Exception as error:
             print("An error occurred in user.cancel_booking():", error)
 
-    def show_bookings(self, date, userId = None):
+    def get_bookings(self, date, userId = None):
         try:
             if userId:
                 numbers = re.findall(r'\d+', userId)
                 [o, u ]= [int(num) for num in numbers]
                 if len(self.org.user) > u and self.org.user[u].id == userId:
                     print(f"Bookings Done by {self.org.user[u].name}:")
-                    return self.org.show_bookings(date, self.org.user[u].bookings)
+                    return self.org.get_bookings(date, self.org.user[u].bookings)
                 else:
                     print("User Not Found.")
             else:
                 print(f"Bookings Done by {self.name}:")
-                return self.org.show_bookings(date, self.bookings)
+                return self.org.get_bookings(date, self.bookings)
         except Exception as error:
-            print("An error occurred in user.show_bookings():", error)
+            print("An error occurred in user.get_bookings():", error)
 
     def notify(self, mtype = 1):
+        # user Notification
         if mtype == 1:
             print(f"User Notification ====> Hey {self.name}, your booking is confirmed.")
         elif mtype == 2:

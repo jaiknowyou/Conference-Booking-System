@@ -13,7 +13,8 @@ class building:
         except Exception as error:
             print("An error occurred in building():", error)
 
-    def add_floor(self):  
+    def add_floor(self):
+        # Adding one more floor on Building
         try:
             self.building.append(floor(len(self.building)))
             print(f"One more Floor is added. Total number of floors in buildings are {len(self.building)}")
@@ -21,6 +22,7 @@ class building:
             print("An error occurred in building.add_floor():", error)
 
     def add_room(self, nfloor, room_type, occupancy):
+        # Adding one more room on given floor with room type and room capacity
         try:
             if nfloor >= len(self.building):
                 print("Invalid Floor.")
@@ -37,6 +39,7 @@ class building:
             print("An error occurred in building.decription():", error)
 
     def searchRoom(self, roomId):
+        # Getting room Obj by specific id
         try:
             numbers = re.findall(r'\d+', roomId)
             [f, r ]= [int(num) for num in numbers]
@@ -51,6 +54,7 @@ class building:
                 return
             slots = []
             for i in self.building:
+                # checking room availability on each floor
                 room = i.is_available(req, start, end)
                 if room:
                     slots = slots + room
@@ -62,6 +66,7 @@ class building:
             print("An error occurred in building.is_available():", error)
 
     def listRoom(self, date):
+        # Listing all rooms with availability
         try:
             if date < datetime.date.today():
                 print("Sorry, The date is Invalid.")
@@ -74,7 +79,9 @@ class building:
                 for i in range(0, len(listRooms), 2):
                     if type(listRooms[i+1]) == str:
                         available =  listRooms[i+1]
+                        # available = "All Day"
                     else:
+                        # Checking Available time range for the room and appending them in List
                         available = []
                         j = 0
                         while j < 24:

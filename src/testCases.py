@@ -20,6 +20,7 @@ class testCase:
             self.building.add_room(2, "D", 20)
             self.building.add_room(1, "E", 10)
             self.building.add_room(3, "E", 5)
+            self.building.add_room(4, "s", 10)
             self.building.description()
         except Exception as error:
             print("An error occurred in testCase1():", error)
@@ -193,13 +194,13 @@ class testCase:
     def testCase10(self):
         try:
             print("testCase10 Result ====>")
-            self.user2.show_bookings(datetime.date.today())
+            self.user2.get_bookings(datetime.date.today())
             last_bookingId = self.user2.bookings[-1]
             print(last_bookingId)
             thread = threading.Thread(target = self.user2.cancel_booking, args = (last_bookingId, ))
             thread.start()
             thread.join()
-            self.user2.show_bookings(datetime.date.today())
+            self.user2.get_bookings(datetime.date.today())
         except Exception as error:
             print("An error occurred in testCase10():", error)
 
@@ -210,13 +211,13 @@ class testCase:
         try:
             print("testCase11 Result ====>")
             date = datetime.date.today()
-            self.user2.show_bookings(date, self.user3.id)
+            self.user2.get_bookings(date, self.user3.id)
             time.sleep(1)
             print("")
-            self.user2.org.show_bookings(date)
+            self.user2.org.get_bookings(date)
             time.sleep(1)
             print("")
-            self.user2.show_bookings(date, self.user.id)
+            self.user2.get_bookings(date, self.user.id)
         except Exception as error:
             print("An error occurred in testCase11():", error)
 

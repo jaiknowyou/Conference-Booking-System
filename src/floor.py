@@ -26,17 +26,20 @@ class floor:
     def is_available(self, req, start, end):
         try:
             slots = []
+            # Filtering room based on user requirement
             filtered = filter(lambda x: x.room_type == req["type"] and x.occupancy >= req["occupancy"], self.room)
             for hall in filtered:
+                # checking each room availability on given date time
                 available_slot = hall.is_available(req["date"], start, end)
                 if available_slot:
                     slots.append(hall)
-                    hall.description()
+            # Returning available rooms
             return slots
         except Exception as error:
             print("An error occurred in floor.is_available():", error)
 
     def listRoom(self, date):
+        # Listing all rooms
         try:
             rooms = ()
             for i in self.room:

@@ -1,0 +1,16 @@
+
+# A Conference Room Booking System
+
+1. To get the code running, please download the repo 
+2. install python3 and run python3.11 main.py in terminal
+3. For running test case type "t" and enter.
+4. Tap enter to run consecutive test cases.
+5. You can use command line for booking as well.
+
+Commands:
+1. add floor
+2. add room
+3. detail : Provides the full description the building and rooms.
+4. add org
+5. add user
+6. switch : get to switch to user and do bookings

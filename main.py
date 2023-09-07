@@ -93,98 +93,125 @@ if datetime.date.today().day == 1:
     booking.renew_monthly_limit()
 
 # For Command Line (Manual Booking):
-# while True:
-#     print("Enter Command:")
-#     text = input()
+while True:
+    try:
+        print("Enter Command:")
+        text = input()
 
-#     if text == "add floor":
-#         building.add_floor()
+        if text == "add floor":
+            building.add_floor()
 
-#     elif text == "add room":
-#         print("which floor?")
-#         floor = input()
-#         print("room type (S/D/E): STANDARD, DELUXE, EXECUTIVE?S\nDELUXE ROOM IS FOR VIDEO CONFERENCING.\nEXECUTIVE ROOM IS FOR LIVE VIDEO CONFERENCING WITH RECORDING")
-#         room_type = input()
-#         print("Enter the Occupancy Capacity of the Hall:")
-#         occupancy = input()
-#         building.add_room(int(floor), room_type, occupancy)
+        elif text == "add room":
+            print("which floor?")
+            floor = input()
+            print("room type (S/D/E): STANDARD, DELUXE, EXECUTIVE?S\nDELUXE ROOM IS FOR VIDEO CONFERENCING.\nEXECUTIVE ROOM IS FOR LIVE VIDEO CONFERENCING WITH RECORDING")
+            room_type = input()
+            print("Enter the Occupancy Capacity of the Hall:")
+            occupancy = input()
+            building.add_room(int(floor), room_type, occupancy)
 
-#     elif text == "detail":
-#         building.description()
+        elif text == "detail":
+            building.description()
 
-#     elif text == "add org":
-#         print("Fill the organisation's name:")
-#         org_name = input()
-#         print("Org's Contact:")
-#         contact = input()
-#         organisation.append(org(org_name, contact))
+        elif text == "add org":
+            print("Fill the organisation's name:")
+            org_name = input()
+            print("Org's Contact:")
+            contact = input()
+            booking.add_org(org_name, contact)
 
-#     elif text == "add user":
-#         print("Enter organisation:")
-#         org_name = input()
-#         if find(organisation, org_name):
-#             print("User Name:")
-#             user = input()
-#             print("email:")
-#             email = input()
-#             print("role:")
-#             role = input()
-#             print("Booking Permission Given (y/n):")
-#             bookingPermission = input()
-#             if bookingPermission == "y":
-#                 bookingPermission = True
-#             else:
-#                 bookingPermission = False
-#         else:
-#             print("Invalid Org.")
-    
-#     elif text == "switch":
-#         print("Enter Org:")
-#         org_name = input()
-#         for i in organisation:
-#             if i.name == org_name:
-#                 org = i
-#                 break
-#         if org:
-#             print("User Name:")
-#             user = input()
-#             for i in org.user:
-#                 if i.name == user:
-#                     user = i
-#                     break
-#             # IF USER NOT FOUND::
-#             print("Actions:")
-#             print("1. List all your bookings")
-#             print("2. List all your org bookings")
-#             print("3. Request Booking")
-#             print("Choose Action: (1/ 2/ 3):")
-#             action = input()
-#             # if else action
-#             if action == "3":
-#                 print("Booking on which date:")
-#                 print("Enter year")
-#                 req = {}
-#                 year = int(input())
-#                 print("Enter month")
-#                 month = int(input())
-#                 print("Enter date")
-#                 date = int(input())
-#                 req["date"] = datetime.date(year, month, date)
-#                 print(req["date"])
-#                 if req["date"] < datetime.date.today():
-#                     print("Wrong Date.")
-#                     continue
-#                 print("Choose room type (S/ D/ E):")
-#                 req["type"] = input()
-#                 print("Choose minimum occupancy:")
-#                 occ = int(input())
-#                 req["occupancy"] = occ
-#                 print("Choose meeting start time:(0-23 hrs)")
-#                 start = input()
-#                 print("Choose end time:")
-#                 end = input()
-#                 available_slot = building.is_available(req, start, end)
-#                 for i in range(0, len(available_slot)):
-#                     print(available_slot[i].description())
-#     elif text == "exit" or text == "e":
-#         break
+        elif text == "add user":
+            print("Enter organisation contact:")
+            org_id = input()
+            org = booking.get_org(org_id)
+            if org:
+                print("User Name:")
+                user = input()
+                print("email:")
+                email = input()
+                print("role:")
+                role = input()
+                print("Booking Permission Given (y/n):")
+                bookingPermission = input()
+                if bookingPermission == "y":
+                    bookingPermission = True
+                else:
+                    bookingPermission = False
+                org.add_user(user, email, role, bookingPermission)
+            else:
+                print("Invalid Org.")
+            
+        
+        elif text == "switch":
+            print("Enter Org:")
+            org_name = input()
+            for i in booking.organisation:
+                if i.name == org_name:
+                    org = i
+                    break
+            if org:
+                print("User Name:")
+                user = input()
+                for i in org.user:
+                    if i.name == user:
+                        user = i
+                        break
+                # IF USER NOT FOUND::
+                while user:
+                    print("Actions:")
+                    print("1. List all your bookings")
+                    print("2. List all your org bookings")
+                    print("3. Request Booking")
+                    print("4. Press e to exit from user")
+                    print("Choose Action: (1/ 2/ 3):")
+                    action = int(input())
+                    # if else action
+                    if action == 3:
+                        print("Booking on which date:")
+                        print("Enter year")
+                        req = {}
+                        year = int(input())
+                        print("Enter month")
+                        month = int(input())
+                        print("Enter date")
+                        date = int(input())
+                        req["date"] = datetime.date(year, month, date)
+                        print(req["date"])
+                        if req["date"] < datetime.date.today():
+                            print("Wrong Date.")
+                            continue
+                        print("Choose room type (S/ D/ E):")
+                        req["type"] = input()
+                        print("Choose minimum occupancy:")
+                        occ = int(input())
+                        req["occupancy"] = occ
+                        print("Choose meeting start time:(0-23 hrs)")
+                        start = int(input())
+                        print("Choose end time:")
+                        end = int(input())
+                        available_slot = building.is_available(req, start, end) or []
+                        for i in range(0, len(available_slot)):
+                            print(available_slot[i].description())
+                        print("Choose any available slot (by index) to book:")
+                        j = int(input())
+                        user.request_booking(available_slot[j-1].id, date, start, end)
+                    elif action == 1 or action == 2:
+                        print("Enter year:")
+                        year = int(input())
+                        print("Enter month")
+                        month = int(input())
+                        print("Enter date")
+                        date = int(input())
+                        date = datetime.date(year, month, date)
+                        if action == 1:
+                            bookings = user.get_bookings(date)
+                            print("For booking cancellation, Choose any Index, else enter")
+                            i = int(input())
+                            if i > 0 and i <= len(bookings):
+                                user.cancel_booking(bookings[i-1].id)
+                        else:
+                            org.get_bookings(date)
+        elif text == "exit" or text == "e":
+            break
+    except Exception as error:
+        print("An error occurred in command line:", error)

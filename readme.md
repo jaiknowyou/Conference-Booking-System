@@ -28,7 +28,7 @@ Features Which can be added by small modifications:
 
 2. If the user inputs incorrect values or data types, there is an error message provided, however the function has to be re-initialized again. However to avoid this happening, the program provides prompts throughout in manual mode via command line.
 
-3. If 2 users/organisations have the same email id, duplicate users/organisations are created, however This can be eliminated by using dictionary as data structure.
+3. If 2 users/organisations inputs the same email id, duplicate users/organisations are created, however This can be eliminated by using dictionary as data structure.
 
 4. A price tag could be added specific to each room which can be set according to occupancy and room type. The program can also use strategy pattern to keep price dynamic.
 
