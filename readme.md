@@ -37,7 +37,7 @@ Features Which can be added by small modifications:
 The Booking System has many Subjects:
 1. Building = Floor and Rooms
     class represntation: 
-        building
+        building<br/>
         floor
         room
 2. Organisations and Users
