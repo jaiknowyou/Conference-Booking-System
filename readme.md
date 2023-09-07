@@ -1,13 +1,13 @@
 
 # A Conference Room Booking System
 
-To get the code running, please download the repo and run main.py using python3 version,
-For running test case type "t" and enter.
-Type enter to run consecutive test cases.
+To get the code running, please download the repo and run main.py using python3 version,<br/>
+For running test case type "t" and enter.<br/>
+Type enter to run consecutive test cases.<br/>
 
 ## Features
 
-This program is a basic Room Bookingn system. A Conferece building can be defined with any number of rooms of 3 different types: Standard, Deluxe, Executive (varying facilities). The important features are:
+This program is a basic Room Bookingn system. A Conferece building can be defined with any number of rooms of 3 different types: Standard, Deluxe, Executive (varying facilities). The important features are:<br/>
 
 1. Any number of users can be added and stored in the system. Each organisation has users which can create/cancel a booking.
 
@@ -34,37 +34,37 @@ Features Which can be added by small modifications:
 
 ## Code Description
 
-The Booking System has many Subjects:
-1. Building = Floor and Rooms
-    class represntation: 
+The Booking System has many Subjects:<br/>
+1. Building = Floor and Rooms<br/>
+    class represntation: <br/>
         building<br/>
-        floor
-        room
-2. Organisations and Users
-    class represntation:
-        org
-        user
+        floor<br/>
+        room<br/>
+2. Organisations and Users<br/>
+    class represntation:<br/>
+        org<br/>
+        user<br/>
 
 3. Next is Interaction between Users and Rooms which is implemented by action like booking room, cancellation of booking at given reservation time
-    Actions/ Functions ():
-        user.request_booking()
-        user.cancel_booking()
-        room.book()
-        room.cancel()
+    Actions/ Functions ():<br/>
+        user.request_booking()<br/>
+        user.cancel_booking()<br/>
+        room.book()<br/>
+        room.cancel()<br/>
 
-4. All data related to booking is linked with:
-    class:
-        bookingSystem
-    which are reservations, userId, roomId, reservation date and time, booking date
+4. All data related to booking is linked with:<br/>
+    class:<br/>
+        bookingSystem<br/>
+    which are reservations, userId, roomId, reservation date and time, booking date<br/>
 
-5. Reservation data is saved in its own room Object:
-    room.calendar which is initialised as 
-        map[date] = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
-        key: date
-        value: list representing 24 hours
-        the value 0 represents the hourly empty slot
+5. Reservation data is saved in its own room Object:<br/>
+    room.calendar which is initialised as <br/>
+        map[date] = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]<br/>
+        key: date<br/>
+        value: list representing 24 hours<br/>
+        the value 0 represents the hourly empty slot<br/>
 
-## Edge Cases Covered:
+## Edge Cases Covered:<br/>
 
 Basic Test Cases:
 
