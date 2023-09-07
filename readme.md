@@ -66,7 +66,7 @@ The Booking System has many Subjects:
 
 ## Edge Cases Covered:
 
-Write Basic Test Cases:
+Basic Test Cases:
 
 test Case 1: Adding Floor and conference room in the system. With the added description to User.
 
@@ -76,7 +76,7 @@ test Case 3: List Conference Rooms by date
 
 test case 4: Find Suitable Room and Single Booking by User
 
-Write Advanced Test Cases:
+Advanced Test Cases:
 
 test case 5: Same User requests booking same room on same date and time from two devices
 

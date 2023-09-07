@@ -14,3 +14,35 @@ Commands:
 4. add org
 5. add user
 6. switch : get to switch to user and do bookings
+
+## Edge Cases Covered:
+
+Basic Test Cases:
+
+test Case 1: Adding Floor and conference room in the system. With the added description to User.
+
+test Case 2: Adding new Organisation and new User
+
+test Case 3: List Conference Rooms by date
+
+test case 4: Find Suitable Room and Single Booking by User
+
+Advanced Test Cases:
+
+test case 5: Same User requests booking same room on same date and time from two devices
+
+test case 6: Two users request booking same room on same date and time
+
+test case 7: Multiple users booking rooms on overlapping room and dates
+
+test case 8: User requests to book a room for next 30 days at secific time. Case of Monthly Booking Limit
+
+test case 9: User requests booking for past date and time.
+
+test case 10: A booking is cancelled by a user. Another user tries to book that room after slots get free.
+
+test case 11: A user able to access other users booking and organisation booking.
+
+test case 12: Modify booking permission and Check booking for user without booking permission
+
+test case 13: A user tries to cancel booking within 15 minutes of the booking time slot ===> [to be manually checked]
